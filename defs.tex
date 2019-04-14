@@ -1,0 +1,29 @@
+\newcommand{\refp}[1]{(\ref{#1})}
+\newcommand{\pprime}{{\prime\prime}}
+
+\newcommand{\state}[2]{\left<#1,#2\right>}
+
+
+% Rules
+\newcommand{\nsrule}[2][]{\left[\text{#2}_{\text{ns}}^{\text{#1}}\right]}
+\newcommand{\sosrule}[2][]{\left[\text{#2}_{\text{sos}}^{\text{#1}}\right]}
+
+% Transitions
+\newcommand{\nstrans}[3]{\state{#1}{#2} \rightarrow #3}
+\newcommand{\sostrans}[5][]{\state{#2}{#3} \Rightarrow^{#1}\state{#4}{#5}}
+\newcommand{\sosftrans}[4][]{\state{#2}{#3} \Rightarrow^{#1} #4}
+
+% Eval funcs
+\newcommand{\beval}[2]{\mathcal{B}[\![#1]\!] #2}
+\newcommand{\aeval}[2]{\mathcal{A}[\![#1]\!] #2}
+
+% Statements
+\newcommand{\sskip}{\texttt{skip}}
+\newcommand{\sif}[3]{\texttt{if } #1 \texttt{ then } #2 \texttt{ else } #3}
+\newcommand{\srepeat}[2]{\texttt{repeat } #1 \texttt{ until } #2}
+\newcommand{\swhile}[2]{\texttt{while } #1 \texttt{ do } #2}
+\newcommand{\mapvar}[2]{\left[#1 \mapsto #2\right]}
+
+% Literals
+\newcommand{\true}{\textbf{tt}}
+\newcommand{\false}{\textbf{ff}}

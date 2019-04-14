@@ -1,0 +1,21 @@
+
+Show that the structural operational semantics of Table 2.2 is deterministic. Deduce that there is exactly one derivation sequence starting in a configuration $\state{S}{s}$. Argue that a statement $S$ of \textbf{While} cannot both terminate and loop on a state $s$ and hence cannot both be always terminating and always looping.
+\begin{proof}
+We'll prove that if $\sosftrans{S}{s}{s^\prime}$ and $\sosftrans{S}{s}{s^\pprime}$ then $s^\prime=s^\pprime$. We'll do an inductive proof on length of derivation sequence.
+\\
+\textbf{Basis}: Derivations that terminate after a single rule activation.
+\begin{itemize}
+	\item $\sosrule{ass}$:  Then $S$ is $x:=a$ and $s^\prime=s\mapvar{x}{\aeval{a}{s}}$. The only axiom or rule that could give us $\sosftrans{x:=a}{s}{s^\pprime}$ is $\sosrule{ass}$ so it follows that $s^\pprime$ must be $s\mapvar{x}{\aeval{a}{s}}$ giving us that $s^\prime = s^\pprime$.
+	\item $\sosrule{skip}$: Similar to $\sosrule{ass}$. $\sskip$ does not change the state, so $s=s^\prime=s^\pprime$.
+\end{itemize}
+\textbf{Step}: We'll assume that all derivation sequences of length up to $k$ are deterministic, and will show that they are also deterministic for $k+1$. Namely, if $\sosftrans[k+1]{S}{s}{s^\prime}$ and $\sosftrans[k+1]{S}{s}{s^\pprime}$ then $s^\prime = s^\pprime$.
+\begin{itemize}
+	\item Composite statements: if $S=S_1;S_2$ then we must use one of the compound statement rules:
+	\begin{itemize}
+		\item If we used $\sosrule[1]{comp}$ then exists derivation sequence $\sostrans{S_1;S_2}{s}{S_1^\prime;S_2}{s_1}\Rightarrow^{k}s^\prime$. According to Lemma 2.19, exist $k_1,k_2$ such that $k_1 + k_2 = k$ and $\sosftrans[k_1]{S^\prime}{s_1}{s_2}, \sosftrans[k_2]{S_2}{s_2}{s^\prime}$. It holds that $1\le k_1,k_2 < k$ so the induction hypothesis holds for $\sosftrans[k_1+1]{S}{s}{s_2}, \sosftrans[k_2]{S_2}{s_2}{s^\prime}$ where both are deterministic. We had only a single rule activation option so the compound statement is deterministic as well.
+		\item If we sued $\sosrule[2]{comp}$ then exists a derivation sequence $\sostrans{S_1;S_2}{s}{S_2}{s_1}\Rightarrow^{k}s^\prime$ and we get that $\sosftrans{S}{s}{s_1}$. Both $\sosftrans{S}{s}{s_1}$ and $\sosftrans{S_2}{s_1}{s^\prime}$ are deterministic by induction hypothesis, and we only had a single rule to choose from, thus this derivation is deterministic as well.
+	\end{itemize}
+	\item Conditional statements: if $S=\sif{b}{S_1}{S_2}$ then we must use one $\sosrule[\true]{if}, \sosrule[\false]{if}$ rules. $\beval{b}{s}$ has a specific value (either $\true$ or $\false$) which will decide with determinism which rule we invoke. We'll get $\sostrans{S}{s}{S_{*}}{s}\Rightarrow^{k}s^\prime$ where $S_*$ is either $S_1$ or $S_2$. From the inductive hypothesis we get that $\sosftrans[k]{S_*}{s}{s^\prime}$ is deterministic, thus the conditional statement as well.
+	\item While statements: if $S=\swhile{b}{S}$ then we can only activate $\sosrule{while}$. This case is similar to \texttt{if} case, we do one step with the rule we have to use, gain a $k$ length derivation sequence and use the inductive hypothesis to prove determinism of the whole derivation tree.
+\end{itemize}
+\end{proof}

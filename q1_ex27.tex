@@ -1,0 +1,128 @@
+Extend the language \textbf{While} with the statement $\srepeat{S}{b}$
+and define the $\rightarrow$ relation for it. (The semantics of the \texttt{repeat}-construct is not allowed to rely on the existence of a \texttt{while} construct in the language.) Prove that $\srepeat{S}{b}$  and
+\begin{equation*}
+S; \sif{b}{\sskip}{(\srepeat{S}{b})}
+\end{equation*}
+are semantically equivalent.
+
+\begin{proof}
+We'll begin by defining the $\rightarrow$ relation for the new statement:
+\begin{align*}
+\nsrule[\true]{repeat} : \ \ &
+\inferrule
+	{\nstrans{S}{s}{s^\prime}}
+	{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}
+\text{ if } \beval{b}{s^\prime}=\true
+\\
+\nsrule[\false]{repeat} : \ \ &
+\inferrule
+	{
+		\nstrans{S}{s}{s^\prime} \\
+		\nstrans{\srepeat{S}{b}}{s^\prime}{s^{\prime\prime}}
+	}
+	{\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}}
+\text{ if } \beval{b}{s^\prime}=\false
+\end{align*}
+
+Now we'll show semantic equivalence in two parts, first we prove that if
+\begin{equation}\label{eq:3}
+\nstrans{\srepeat{S}{b}}{s}{s^\prime}
+\end{equation}
+then
+\begin{equation}\label{eq:4}
+\nstrans{\sif{b}{\sskip}{(\srepeat{S}{b})}}{s}{s^\prime}
+\end{equation}
+We get that if execution of the loop terminates, then so does a single unfolding of the loop. Because \refp{eq:3} holds, we have a derivation tree $T$ for it. The tree can have one of two forms, depending on the rule used for derivation.
+\begin{itemize}
+	\item If the derivation tree was derived with $\nsrule[\true]{repeat}$ rule, then we get
+	\begin{equation*}
+	\inferrule
+		{\nstrans{S}{s}{s^\prime}}
+		{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}
+	\end{equation*}
+	and we also know that $\beval{b}{s^\prime}=\true$. We can construct the following derivation tree:
+	\begin{equation*}
+	\inferrule
+	{
+		\nstrans{S}{s}{s^\prime} \\
+		\inferrule
+			{\nstrans{\sskip}{s^\prime}{s^\prime}}
+			{
+				\nstrans
+					{\sif{b}{\sskip}{\left(\srepeat{S}{b}\right)}}
+					{s^\prime}
+					{s^\prime}
+			}_{\nsrule[\true]{if}}
+	}
+	{\nstrans{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\prime}}_{\nsrule{comp}}
+	\end{equation*}
+	\item  If the derivation tree was derived with $\nsrule[\false]{repeat}$ rule, then we get
+	\begin{equation*}
+	\inferrule
+		{
+			\nstrans{S}{s}{s^\prime} \\
+			\nstrans{\srepeat{S}{b}}{s^\prime}{s^{\prime\prime}}
+		}
+		{\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}}
+	\end{equation*}
+	and also that $\beval{b}{s^\prime}=\false$. From that we can construct also the following:
+	\begin{equation*}
+	\inferrule
+		{
+			\nstrans{S}{s}{s^\prime} \\
+			\inferrule
+				{\nstrans{\srepeat{S}{b}}{s^\prime}{s^{\prime\prime}}}
+				{\nstrans{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^\prime}{s^{\prime\prime}}}_{\nsrule[\false]{if}}
+		}
+		{\nstrans{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^{\prime\prime}}}_{\nsrule{comp}}
+	\end{equation*}
+\end{itemize}
+This shows that \refp{eq:3} $\Rightarrow$ \refp{eq:4}. We'll now show that \refp{eq:4} $\Rightarrow$ \refp{eq:3}. Given:
+\begin{equation*}
+\inferrule
+	{
+		\nstrans{S}{s}{s^{\prime\prime}} \\
+		\nstrans{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^{\prime\prime}}{s^\prime}
+	}
+	{\nstrans{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\prime}}_{\nsrule{comp}}
+\end{equation*}
+\begin{itemize}
+	\item If $\beval{b}{s^{\prime\prime}}=\true$ then we derive using $\nsrule[\true]{if}$ rule and get:
+	\begin{equation*}
+	\inferrule
+		{
+			\nstrans{S}{s}{s^{\prime\prime}} \\
+			\inferrule
+				{\nstrans{\sskip}{s^{\prime\prime}}{s^\prime}}
+				{\nstrans{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^{\prime\prime}}{s^\prime}}_{\nsrule[\true]{if}}
+		}
+		{\nstrans{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\prime}}_{\nsrule{comp}}
+	\end{equation*}
+	From the rule $\nsrule{skip}$ we get that $s^\prime=s^{\prime\prime}$ and we can construct:
+	\begin{equation*}
+	\inferrule
+		{\nstrans{S}{s}{s^\prime}}
+		{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}_{\nsrule[\true]{repeat}}
+	\end{equation*}
+	\item  $\beval{b}{s^{\prime\prime}}=\false$ then we derive using $\nsrule[\false]{if}$ rule and get:
+		\begin{equation*}
+	\inferrule
+	{
+		\nstrans{S}{s}{s^{\prime\prime}} \\
+		\inferrule
+		{\nstrans{\srepeat{S}{b}}{s^{\prime\prime}}{s^\prime}}
+		{\nstrans{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^{\prime\prime}}{s^\prime}}_{\nsrule[\false]{if}}
+	}
+	{\nstrans{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\prime}}_{\nsrule{comp}}
+	\end{equation*}
+	This allows us to construct the following and complete the proof:
+	\begin{equation*}
+	\inferrule
+	{
+		\nstrans{S}{s}{s^{\prime\prime}} \\
+		\nstrans{\srepeat{S}{b}}{s^{\prime\prime}}{s^\prime}
+	}
+	{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}_{\nsrule{comp}}
+	\end{equation*}
+\end{itemize}
+\end{proof}
