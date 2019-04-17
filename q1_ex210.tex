@@ -1,7 +1,6 @@
 Prove that $\srepeat{S}{b}$ (as defined in Exercise 2.7) is semantically equivalent to $S;\swhile{\neg b}{S}$. Argue that this means extended semantics is deterministic.
 \begin{proof}
-We'll show that if $\nstrans{\srepeat{S}{b}}{s}{s_0}$ and $\nstrans{S;\swhile{\neg b}{S}}{s}{s_1}$ then $s_0=s_1$. We'll do an inductive proof over the number of rule invocations in the derivation tree.
-
+We'll show that if $\nstrans{\srepeat{S}{b}}{s}{s_0}$ and $\nstrans{S;\swhile{\neg b}{S}}{s}{s_1}$ then $s_0=s_1$. We'll do an inductive proof over the number of rule invocations in the derivation tree. 
 Theorem 2.9 in the book handles all the non-\texttt{repeat} cases, we'll now only show the equivalence between the above 2 statements, namely:
 \begin{equation} \label{eq:5}
 \nstrans{\srepeat{S}{b}}{s}{s^\prime} \Leftrightarrow \nstrans{S;\swhile{\neg b}{S}}{s}{s^\prime}
@@ -24,7 +23,6 @@ We also get that $\beval{b}{s^\prime}=\true$ (and $\beval{\neg b}{s^\prime}=\fal
 }
 {\nstrans{S;\swhile{\neg b}{S}}{s}{s^\prime}}_{\nsrule{comp}}
 \end{equation*}
-
 \textbf{Step}: We'll assume any tree that is produced with $k$ or less steps holds \refp{eq:5}, we'll show that a tree with $k+1$ invocations holds this property as well.
 \begin{itemize}
 	\item $\nsrule[\true]{repeat}$: we have a tree that looks the following:

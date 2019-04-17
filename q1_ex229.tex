@@ -1,0 +1,84 @@
+Consider the extension of language \textbf{While} with the statement $\srepeat{S}{b}$. The natural semantics of the construct was constructed int Exercise 2.7 and the structural operational semantics in Exercise 2.17. Modify the proof of Theorem 2.26 so that the theorem applies to the extended language.
+\begin{proof}
+The proof of Theorem 2.26  follows from Lemmas 2.27 and 2.28. We'll amend the lemmas to cover the \texttt{repeat} case.
+\subsubsection*{Lemma 2.27}
+We'll need to show that $\nstrans{S}{s}{s^\prime}$ implies $\sosftrans[*]{S}{s}{s^\prime}$ under extended semantics.
+\begin{proof}
+We have the induction basis and steps for all rules except $\nsrule[*]{repeat}$, which are supplemented below:
+\begin{enumerate}
+	\item \textbf{The case} $\nsrule[\false]{repeat}$: Assume that $\nstrans{\srepeat{S}{b}}{s}{s^\pprime}$.
+	Using the rule we get $\beval{b}{s^\prime}=\false$, $\nstrans{S}{s}{s^\prime}$ and $\nstrans{\srepeat{S}{b}}{s^\prime}{s^\pprime}$.
+
+	The induction hypothesis can be applied to the two premises which gives us
+	\begin{equation*}
+		\sosftrans[*]{S}{s}{s^\prime} \text{ and } \sosftrans[*]{\srepeat{S}{b}}{s^\prime}{s^\pprime}
+	\end{equation*}
+	From the latter premise, $\beval{b}{s^\prime}=\false$ and $\sosrule[\false]{if}$ we get
+	\begin{equation*}
+		\sosftrans[*]{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^\prime}{s^\pprime}
+	\end{equation*}
+	Combining it with the first premise and Exercise 2.21 we get:
+	\begin{equation*}
+		\sosftrans[*]{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\pprime}
+	\end{equation*}
+	Finally, we show that invoking $\sosrule{repeat}$ gives:
+	\begin{multline*}
+		\state{\srepeat{S}{b}}{s} \\ {}_{\sosrule{repeat}}\Rightarrow  \sosftrans[*]{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}{s^\pprime}
+	\end{multline*}
+	\item \textbf{The case} $\nsrule[\true]{repeat}$: Assume that $\nstrans{\srepeat{S}{b}}{s}{s^\prime}$.
+	Using the rule we get $\beval{b}{s^\prime}=\true$, $\nstrans{S}{s}{s^\prime}$. Using the induction hypothesis gives us $\sosftrans[*]{S}{s}{s^\prime}$ and the $\sosrule{repeat}$ gives us:
+	\begin{align*}
+		\state{\srepeat{S}{b}}{s} & \\
+		{}_{\sosrule{repeat}}\Rightarrow & \state{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}  \\ 
+		{}_{\sosrule[\true]{if}}\Rightarrow &	\sosftrans[*]{S}{s}{s^\pprime}
+	\end{align*}
+\end{enumerate}
+\end{proof}
+\subsubsection*{Lemma 2.28}
+Here we need to show that $\sosftrans[*]{S}{s}{s^\prime}$ implies $\nstrans{S}{s}{s^\prime}$ under extended semantics.
+\begin{proof}
+We have the induction basis and steps for all rules except $\sosrule{repeat}$, which is given below:
+
+\textbf{The case} $\sosrule{repeat}$: We have
+\begin{align*}
+	\state{\srepeat{S}{b}}{s} & \\
+	{}_{\sosrule{repeat}} \Rightarrow & \state{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s} 
+\end{align*}
+therefore exist $k_1,k_2$ s.t. $k_1+k_2=k_0+1$ and $\sosftrans[k_1]{S}{s}{s^\prime}$ and
+\begin{equation*}
+	\sosftrans[k_2]{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^\prime}{s^\pprime}
+\end{equation*}
+From induction hypothesis $\sosftrans[*]{S}{s}{s^\prime}$ implies $\nstrans{S}{s}{s^\prime}$, for the latter we'll handle two cases:
+\begin{enumerate}
+	\item If $\beval{b}{s^\prime}=\true$ then
+	\begin{equation*}
+		\state{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^\prime} \Rightarrow \state{\sskip}{s^\prime}\Rightarrow s^\prime=s^\pprime
+	\end{equation*}
+	In that case, from $\nsrule[\true]{repeat}$ we get:
+	\begin{equation*}
+	\inferrule
+		{\nstrans{S}{s}{s^\pprime}}
+		{\nstrans{\srepeat{S}{b}}{s}{s^\pprime}}
+	\end{equation*}
+	\item If $\beval{b}{s^\prime}=\false$ then
+	\begin{equation*}
+		\state{\sif{b}{\sskip}{\srepeat{S}{b}}}{s^\prime} \Rightarrow \state{\srepeat{S}{b}}{s^\prime}\Rightarrow^{k_0-2} s^\pprime
+	\end{equation*}
+	From the induction hypothesis $\state{\srepeat{S}{b}}{s^\prime}\Rightarrow^{k_0-2} s^\pprime$ implies
+	\begin{equation*}
+		\nstrans{\srepeat{S}{b}}{s^\prime}{s^\pprime}
+	\end{equation*}
+	Recalling $\nstrans{S}{s}{s^\prime}$ and using $\nsrule{comp}$ gives us:
+	\begin{equation*}
+		\inferrule
+			{
+				\nstrans{S}{s}{s^\prime} \\
+				\nstrans{\srepeat{S}{b}}{s^\prime}{s^\pprime}
+			}
+			{\nstrans{\srepeat{S}{b}}{s}{s^\pprime}}
+	\end{equation*}
+\end{enumerate}
+
+\end{proof}
+This completes the proof of Theorem 2.26
+\end{proof}

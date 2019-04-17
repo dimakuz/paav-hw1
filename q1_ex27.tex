@@ -1,29 +1,26 @@
-Extend the language \textbf{While} with the statement $\srepeat{S}{b}$
-and define the $\rightarrow$ relation for it. (The semantics of the \texttt{repeat}-construct is not allowed to rely on the existence of a \texttt{while} construct in the language.) Prove that $\srepeat{S}{b}$  and
+Extend the language \textbf{While} with the statement $\srepeat{S}{b}$ and define the $\rightarrow$ relation for it. (The semantics of the \texttt{repeat}-construct is not allowed to rely on the existence of a \texttt{while} construct in the language.) Prove that $\srepeat{S}{b}$  and
 \begin{equation*}
 S; \sif{b}{\sskip}{(\srepeat{S}{b})}
 \end{equation*}
 are semantically equivalent.
-
 \begin{proof}
 We'll begin by defining the $\rightarrow$ relation for the new statement:
 \begin{align*}
-\nsrule[\true]{repeat} : \ \ &
-\inferrule
-	{\nstrans{S}{s}{s^\prime}}
-	{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}
-\text{ if } \beval{b}{s^\prime}=\true
-\\
-\nsrule[\false]{repeat} : \ \ &
-\inferrule
-	{
-		\nstrans{S}{s}{s^\prime} \\
-		\nstrans{\srepeat{S}{b}}{s^\prime}{s^{\prime\prime}}
-	}
-	{\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}}
-\text{ if } \beval{b}{s^\prime}=\false
+	\nsrule[\true]{repeat} : \ \ &
+	\inferrule
+		{\nstrans{S}{s}{s^\prime}}
+		{\nstrans{\srepeat{S}{b}}{s}{s^\prime}}
+	\text{ if } \beval{b}{s^\prime}=\true
+	\\
+	\nsrule[\false]{repeat} : \ \ &
+	\inferrule
+		{
+			\nstrans{S}{s}{s^\prime} \\
+			\nstrans{\srepeat{S}{b}}{s^\prime}{s^{\prime\prime}}
+		}
+		{\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}}
+	\text{ if } \beval{b}{s^\prime}=\false
 \end{align*}
-
 Now we'll show semantic equivalence in two parts, first we prove that if
 \begin{equation}\label{eq:3}
 \nstrans{\srepeat{S}{b}}{s}{s^\prime}

@@ -2,12 +2,13 @@
 Show that the structural operational semantics of Table 2.2 is deterministic. Deduce that there is exactly one derivation sequence starting in a configuration $\state{S}{s}$. Argue that a statement $S$ of \textbf{While} cannot both terminate and loop on a state $s$ and hence cannot both be always terminating and always looping.
 \begin{proof}
 We'll prove that if $\sosftrans{S}{s}{s^\prime}$ and $\sosftrans{S}{s}{s^\pprime}$ then $s^\prime=s^\pprime$. We'll do an inductive proof on length of derivation sequence.
-\\
+
 \textbf{Basis}: Derivations that terminate after a single rule activation.
 \begin{itemize}
 	\item $\sosrule{ass}$:  Then $S$ is $x:=a$ and $s^\prime=s\mapvar{x}{\aeval{a}{s}}$. The only axiom or rule that could give us $\sosftrans{x:=a}{s}{s^\pprime}$ is $\sosrule{ass}$ so it follows that $s^\pprime$ must be $s\mapvar{x}{\aeval{a}{s}}$ giving us that $s^\prime = s^\pprime$.
 	\item $\sosrule{skip}$: Similar to $\sosrule{ass}$. $\sskip$ does not change the state, so $s=s^\prime=s^\pprime$.
 \end{itemize}
+
 \textbf{Step}: We'll assume that all derivation sequences of length up to $k$ are deterministic, and will show that they are also deterministic for $k+1$. Namely, if $\sosftrans[k+1]{S}{s}{s^\prime}$ and $\sosftrans[k+1]{S}{s}{s^\pprime}$ then $s^\prime = s^\pprime$.
 \begin{itemize}
 	\item Composite statements: if $S=S_1;S_2$ then we must use one of the compound statement rules:
