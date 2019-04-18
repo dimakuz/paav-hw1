@@ -1,0 +1,54 @@
+Let $S$ be a set, $L$ a lattice and $\beta:S \rightarrow L$ a total function. Let $\alpha_\beta:2^S\rightarrow L$ be a total function defined as $\alpha_\beta(X)=\sqcup\{\beta(s)\mid s\in X\}$ for any $S \subseteq X$ and $\gamma_\beta(a):L\rightarrow 2^S$, a total function defined as $\gamma_\beta(a)=\{s\in S\mid \beta(s)\sqsubseteq a\}$ for any $a \in L$. Then,  $(2^S, \alpha_\beta, \gamma_\beta, L)$ is a Galois connection.
+
+\subsubsection*{Solution}
+We'll show that needed properties hold:
+\begin{itemize}
+	\item $\alpha_\beta$ is monotone: Let $X_1,X_2\in 2^S$ s.t. $X_1 \subseteq X_2$ then:
+	\begin{align*}
+		\alpha_\beta(X_1) =& \sqcup \{\beta(s) \mid s \in X_1\} \\
+		\alpha_\beta(X_2) =& \sqcup \{\beta(s) \mid s \in X_2\} \\
+					=& \sqcup \{\beta(s) \mid s \in X_1 \cup (X_2 \setminus X_1)\} \\
+					=& (\sqcup \{\beta(s) \mid s \in X_1\}) \sqcup (\sqcup \{\beta(s) \mid s \in X_2 \setminus X_1\}) \\
+					=& \alpha_\beta(X_1) \sqcup (\sqcup \{\beta(s) \mid s \in X_2 \setminus X_1\})
+	\end{align*}
+	as such we get that $X_1 \subseteq X_2 \Rightarrow \alpha_\beta(X_1) \sqsubseteq \alpha_\beta(X_2)$.
+	\item $\gamma_\beta$ is monotone: Let $a_1,a_2 \in L$ s.t. $a_1 \sqsubseteq a_2$ then:
+	\begin{align*}
+		\gamma_\beta(a_1) =& \{ s \in S \mid \beta(s) \sqsubseteq a_1 \} \\
+		\gamma_\beta(a_2) =& \{ s \in S \mid \beta(s) \sqsubseteq a_2 \} \\
+					=& \{ s \in S \mid \beta(s) \sqsubseteq a_1 \sqcup a_2 \} \\
+					=& \{ s \in S \mid \beta(s) \sqsubseteq a_1 \} \cup \{ s \in S \mid \beta(s) \sqsubseteq a_1 \sqcup a_2 \} \\
+					=& \gamma_\beta(a_1) \cup \{ s \in S \mid \beta(s) \sqsubseteq a_1 \sqcup a_2 \}
+	\end{align*}
+	as such we get that $a_1 \sqsubseteq a_2 \Rightarrow \gamma_\beta(a_1) \subseteq \gamma_\beta(a_2)$.
+	\item $\alpha_\beta(c) \sqsubseteq a \iff c \subseteq \gamma_\beta(a)$
+	\begin{itemize}
+		\item $\alpha_\beta(c) \sqsubseteq a \Rightarrow c \subseteq \gamma_\beta(a)$:
+		\begin{align*}
+			\alpha_\beta(c) & \sqsubseteq a
+			\\
+			\sqcup \{\beta(s) \mid s \in c\}& \sqsubseteq a
+			\\
+			\gamma_\beta(\sqcup \{\beta(s) \mid s \in c\}) & \subseteq \gamma_\beta(a)
+			\\
+			\{s \in S \mid \beta(s) \sqsubseteq (\sqcup \{\beta(s) \mid s \in c\}) \} & \subseteq \gamma_\beta(a)
+			\\
+			\bigcup \{ s \in c \mid \beta(s) \sqsubseteq \beta(s) \} \subseteq
+			\{s \in S \mid \beta(s) \sqsubseteq (\sqcup \{\beta(s) \mid s \in c\}) \} & \subseteq \gamma_\beta(a)
+			\\
+			\bigcup \{ s \in c \mid \beta(s) \sqsubseteq \beta(s) \} & \subseteq \gamma_\beta(a)
+			\\
+			c & \subseteq \gamma_\beta(a)
+		\end{align*}
+		\item $\alpha_\beta(c) \sqsubseteq a \Leftarrow c \subseteq \gamma_\beta(a)$:
+		\begin{align*}
+			c & \subseteq \gamma_\beta(a) \\
+			c & \subseteq \{ s \in S \mid \beta(s) \sqsubseteq a \} \\
+			\alpha_\beta(c) & \sqsubseteq \alpha_\beta(\{ s \in S \mid \beta(s) \sqsubseteq a \}) \\
+			\alpha_\beta(c) & \sqsubseteq \sqcup \{\beta(s) \mid s \in \{ s \in S \mid \beta(s) \sqsubseteq a \} \\
+			\alpha_\beta(c) & \sqsubseteq \sqcup \{\beta(s) \mid \beta(s) \sqsubseteq a\} \sqsubseteq \sqcup \{a\}\\
+			\alpha_\beta(c) & \sqsubseteq \sqcup \{a\} \\
+			\alpha_\beta(c) & \sqsubseteq a \\
+		\end{align*}
+	\end{itemize}
+\end{itemize}

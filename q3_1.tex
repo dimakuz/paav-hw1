@@ -1,0 +1,35 @@
+Prove the following
+\begin{enumerate}
+	\item If both $(A, \alpha, \gamma_1, C)$ and $(A, \alpha, \gamma_2, C)$ are Galois connections, then $\gamma_1 = \gamma_2$.
+	\begin{proof}
+		\begin{enumerate}
+			\item From the definition of Galois connections we get:
+			\begin{equation*}
+			\alpha(c) \sqsubseteq a \iff c \sqsubseteq \gamma_1(a) \text{ and } \alpha(c) \sqsubseteq a \iff c \sqsubseteq \gamma_2(a) 
+			\end{equation*}
+			thus $c \sqsubseteq \gamma_1(a)\iff c \sqsubseteq \gamma_2(a)$.
+			\item $\forall a \in A$ it holds that $\gamma_1(a) \sqsubseteq \gamma_1(a)$ and from the first step we get $\gamma_1(a) \sqsubseteq \gamma_2(a)$.
+			\item Similarly $\forall a \in A$ it holds that $\gamma_2(a) \sqsubseteq \gamma_2(a)$ and from the first step we get $\gamma_2(a) \sqsubseteq \gamma_1(a)$.
+			\item From the last 2 items we can construct:
+			\begin{equation*}
+			\forall a \in A: \qquad \gamma_1(a) \sqsubseteq \gamma_2(a) \sqsubseteq \gamma_1(a) \iff \gamma_1(a) = \gamma_2(a) \iff \gamma_1 = \gamma_2
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	\item If both $(A, \alpha_1, \gamma, C)$ and $(A, \alpha_2, \gamma, C)$ are Galois connections, then $\alpha_1 = \alpha_2$.
+	\begin{proof}
+		\begin{enumerate}
+			\item From the definition of Galois connections we get:
+			\begin{equation*}
+				c \sqsubseteq \gamma(a) \iff \alpha_1(c)\sqsubseteq a \text{ and } c \sqsubseteq \gamma(a) \iff \alpha_2(c) \sqsubseteq a
+			\end{equation*}
+			thus $\alpha_1(c)\sqsubseteq a \iff \alpha_2(c) \sqsubseteq a$.
+			\item $\forall c \in C$ it holds that $\alpha_1(c) \sqsubseteq \alpha_1(c)$ and from the first step we get $\alpha_1(c) \sqsubseteq \alpha_2(c)$.
+			\item Similarly $\forall c \in C$ it holds that $\alpha_2(c) \sqsubseteq \alpha_2(c)$ and from the first step we get $\alpha_2(c) \sqsubseteq \alpha_1(c)$.
+			\item From the last 2 items we can construct:
+			\begin{equation*}
+				\forall c \in C:\qquad \alpha_1(c) \sqsubseteq \alpha_2(c) \sqsubseteq \alpha_1(c) \iff \alpha_1(c) = \alpha_2(c) \iff \alpha_1 = \alpha_2
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+\end{enumerate}

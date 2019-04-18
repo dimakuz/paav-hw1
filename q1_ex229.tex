@@ -5,7 +5,7 @@ The proof of Theorem 2.26  follows from Lemmas 2.27 and 2.28. We'll amend the le
 We'll need to show that $\nstrans{S}{s}{s^\prime}$ implies $\sosftrans[*]{S}{s}{s^\prime}$ under extended semantics.
 \begin{proof}
 We have the induction basis and steps for all rules except $\nsrule[*]{repeat}$, which are supplemented below:
-\begin{enumerate}
+\begin{itemize}
 	\item \textbf{The case} $\nsrule[\false]{repeat}$: Assume that $\nstrans{\srepeat{S}{b}}{s}{s^\pprime}$.
 	Using the rule we get $\beval{b}{s^\prime}=\false$, $\nstrans{S}{s}{s^\prime}$ and $\nstrans{\srepeat{S}{b}}{s^\prime}{s^\pprime}$.
 
@@ -32,7 +32,7 @@ We have the induction basis and steps for all rules except $\nsrule[*]{repeat}$,
 		{}_{\sosrule{repeat}}\Rightarrow & \state{S;\sif{b}{\sskip}{\srepeat{S}{b}}}{s}  \\ 
 		{}_{\sosrule[\true]{if}}\Rightarrow &	\sosftrans[*]{S}{s}{s^\pprime}
 	\end{align*}
-\end{enumerate}
+\end{itemize}
 \end{proof}
 \subsubsection*{Lemma 2.28}
 Here we need to show that $\sosftrans[*]{S}{s}{s^\prime}$ implies $\nstrans{S}{s}{s^\prime}$ under extended semantics.
