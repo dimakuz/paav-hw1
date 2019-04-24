@@ -1,0 +1,21 @@
+Define an abstract transformer $\ldbrack x=y+c\rdbrack ^\#$ and show that it is the best transformer.
+
+\subsubsection*{Solution}
+We define a transformer similar to the way $\ldbrack x=y\rdbrack ^\#$ was defined in class:
+\begin{itemize}
+	\item Let $EQ=\{x=y+c\ |\ x,y\in Var,c\in \mathbb{Z}\}$, so we can define our abstract lattice 
+	$A=(2^{EQ},\ \supseteq,\ \bigcap,\ \bigcup,\ EQ,\ \varnothing)$.
+	\item Define $EQ(\mathit{X},y)=\{y=x+c,\ z=y+d \in \mathit{X}\}$ as the subset of equalities containing $y$ and
+	$EQc(\mathit{X},y)=\mathit{X}\setminus EQ(\mathit{X},y)$ as the complement.
+	\item Define naive version of the transformer as $\ldbrack x=y+c\rdbrack ^{\#1} \mathit{X}= \{x=y+c\}\bigwedge EQc(\mathit{X},x)$
+	\item Now define a reduction operator \\ \\
+	\setlength\parindent{0.5in}
+	$\mathtt{Explicate(X)=}$\\
+	$\indent \mathtt{if\ \{x=y+c,y=z+d\}\subseteq \mathit{X}\ and\ \{x=z+(c+d)\}\nsubseteq \mathit{X}\ then:}$\\
+	$\indent \indent \mathtt{Explicate(X\cup \{x=z+(c+d)\})}$\\
+	$\indent \mathtt{else\ if\ \{x=y+c\}\subseteq \mathit{X}\ and\ \{y=x+(-c)\}\nsubseteq \mathit{X}\ then:}$\\
+	$\indent \indent \mathtt{Explicate(X\cup \{y=x+(-c)\})}$\\
+	$\indent \mathtt{else\ \mathit{X}}$
+	\setlength\parindent{0.0in}
+	\item Now define $\ldbrack x=y+c\rdbrack ^\# =Explicate\ \circ \ \ldbrack x=y+c\rdbrack ^{\#1}$
+\end{itemize}

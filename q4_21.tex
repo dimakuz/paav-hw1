@@ -1,0 +1,19 @@
+Let $Var^*$ be a finite set of program variables.
+Show that $(Var^* \rightarrow \mathbf{Interval},\ \sqsubseteq^{'})$ where $\forall f_1,f_2 \in Var^* \rightarrow \mathbf{Interval}:(f_1\sqsubseteq^{'}f_2)\longleftrightarrow (\forall v \in Var^*. f_1(v)\sqsubseteq^{'}f_2(v))$ is a complete lattice. 
+
+\subsubsection*{Solution}
+We know that $(Var^* \rightarrow \mathbf{Interval},\ \sqsubseteq^{'})$ is a partial order. To prove that it is a complete lattice we show that every subset has a lowest upper bound and a greatest lower bound. We start from showing a lowest upper bound.
+\begin{proof}
+	Let $<f_i>$ be a subset of the partial order.
+	We use the fact that
+	\begin{equation}
+	(\mathbf{Interval},\ \sqsubseteq)\ is\ a\ complete\ lattice
+	\end{equation}
+	Define $f \in Var^* \rightarrow \mathbf{Interval}$ as
+	\begin{equation*}
+	f(v)=\sqcup <f_i(v)>
+	\end{equation*}
+	Let $i \in \mathbb{N}$. Let $v \in Var^*$. We know from (6) that $f_i(v)\sqsubseteq \sqcup<f_i(v)>$. So, $f_i(v)\sqsubseteq f(v)$ for every variable $v$. Hence by definition $f_i\sqsubseteq^{'}f$, and this is true for every value of $i$.\\ \\
+	Let $y$ be an upper bound of $<f_i>$. Let $v \in Var^*$. $\sqcup<f_i(v)>\ \sqsubseteq y(v)$ from (6). So, $f(v)\sqsubseteq y(v)$ and consequently $f\sqsubseteq^{'}y$.\\ \\
+	$f$ is the greatest lower bound of $(Var^* \rightarrow \mathbf{Interval},\ \sqsubseteq^{'})$. Similar reasoning applies when showing existance of a lowest upper bound.
+\end{proof}
