@@ -1,0 +1,32 @@
+Define a widening operator for the lattice.
+
+\subsubsection*{Solution}
+Define $f=f_i\triangledown^{'} f_j$ for all $f_i,f_j\in (Var^* \rightarrow \mathbf{Interval},\ \sqsubseteq^{'})$ as
+\begin{equation*}
+\forall v\in Var^*.f(v)=f_i(v)\triangledown f_j(v)
+\end{equation*}
+where $\triangledown$ is the widening operator for $(\mathbf{Interval},\ \sqsubseteq)$. We show that $\triangledown^{'}$ is a widening operator for $(Var^* \rightarrow \mathbf{Interval},\ \sqsubseteq^{'})$.
+\begin{proof}
+	\begin{enumerate}
+	\item Let $v\in Var^*$, $f_i,f_j\in Var^* \rightarrow \mathbf{Interval}$.\\
+	\begin{equation*}
+	(f_i\sqcup f_j)(v)=f_i(v)\sqcup f_j(v)\sqsubseteq f_i(v)\triangledown f_j(v)=(f_i\triangledown f_j)(v)
+	\end{equation*}
+	Therefore, $f_i\sqcup f_j\sqsubseteq^{'} f_i\triangledown^{'} f_j$.
+	\item Let $v\in Var^*$. Let $f_0,f_1,f_2,...$ an ascending chain such that $f_0\sqsubseteq^{'}f_1\sqsubseteq^{'}f_2\sqsubseteq^{'}...$. Define sequence
+	\begin{align*}
+	y_0=f_0 \\
+	y_{i+1}=y_i\triangledown^{'} f_{i+1}\\
+	\end{align*}
+	and another utility sequence
+	\begin{align*}
+	y_0^v=f_0(v) \\
+	y_{i+1}^v=y_i\triangledown f_{i+1}
+	\end{align*}
+	We know that there exists $j^v$ such that $y_{j_v+1}^v=y_{j_v}^v$. Since $Var^*$ is a finite set, define
+	\begin{equation*}
+	j_{max}=\max\limits_{v\in Var^*}j^v
+	\end{equation*}
+	and for every $v\in Var^*$ we have $y_{j_{max}+1}^v=y_{j_{max}}^v$, and consequently $y_{j_{max}+1}(v)=y_{j_{max}}(v)$. Thus, we have proved that sequence $y_i$ is finite.
+	\end{enumerate}
+\end{proof}
