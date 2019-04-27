@@ -1,0 +1,15 @@
+We define the predicate \textit{strongest postcondition} for $S$ and $P$
+\begin{equation*}
+	\mathrm{sp}(P,S)\ s'=\true\iff\exists s(\nstrans{S}{s}{s^\prime}and\ P\ s=\true)
+\end{equation*}
+
+\begin{enumerate}
+\item Prove that $\models_p \hoare{P}{S}{\mathrm{sp}(P,S)}$.
+\begin{proof}
+	Let $s,s^\prime$ such that $P\ s=\tt$ and $\nstrans{S}{s}{s^\prime}$. So, we simply choose $s$ and get $\mathrm{sp}(P,S)\ s'=\true$.
+\end{proof}
+\item Prove that if $\models_p \hoare{P}{S}{Q}$ then $\mathrm{sp}(P,S)\Rightarrow Q$.
+\begin{proof}
+	Assume $\mathrm{sp}(P,S)\ s^\prime=\tt$, for a state $s^\prime$. There exists $s$ such that $\nstrans{S}{s}{s^\prime}$ and $P\ s=\true$. From $\models_p \hoare{P}{S}{Q}$ we deduce that $Q\ s^\prime=\true$.
+\end{proof}
+\end{enumerate}

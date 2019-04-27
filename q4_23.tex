@@ -1,29 +1,29 @@
-Define functions $\alpha^{'}$ and $\gamma^{'}$ such that $(P(Var^*\rightarrow \mathbb{Z}),\ \alpha^{'},\ \gamma^{'},\ Var^*\rightarrow \mathbf{Interval})$ is a Galois connection. Is the Galois connection a Galois insertion?
+Define functions $\alpha^\prime$ and $\gamma^\prime$ such that $(P(Var^*\rightarrow \mathbb{Z}),\ \alpha^\prime,\ \gamma^\prime,\ Var^*\rightarrow \mathbf{Interval})$ is a Galois connection. Is the Galois connection a Galois insertion?
 
 \subsubsection*{Solution}
-Define $\alpha^{'}:P(Var^*\rightarrow \mathbb{Z})\rightarrow (Var^*\rightarrow \mathbf{Interval})$ as
+Define $\alpha^\prime:P(Var^*\rightarrow \mathbb{Z})\rightarrow (Var^*\rightarrow \mathbf{Interval})$ as
 \begin{equation*}
 \alpha^{'}(S)=f\ s.t.\ \forall v\in Var^*.f(v)=[\min\limits_{s\in S}s(v),\ \max\limits_{s\in S}s(v)]
 \end{equation*}
 which means, that for all states in the set S, the interval is from the minimum assignment to $v$ to the maximum assginment to $v$.\\
 
-Define $\gamma^{'}:(Var^*\rightarrow \mathbf{Interval})\rightarrow P(Var^*\rightarrow \mathbb{Z})$ so that $\gamma^{'}(f)$ is the set that contains all combinations of assignments induced by $f$ of variables to integersm as discrete states.\\
+Define $\gamma^\prime:(Var^*\rightarrow \mathbf{Interval})\rightarrow P(Var^*\rightarrow \mathbb{Z})$ so that $\gamma^\prime(f)$ is the set that contains all combinations of assignments induced by $f$ of variables to integersm as discrete states.\\
 For example, if $Var^* = \{x,y\}$ and $f(x)=[1,2],\ f(y)=[5,7]$ then
 \begin{align*}
-\gamma^{'}(f)=\{(s(x)=1,s(y)=5)\ (s(x)=1,s(y)=6)\ (s(x)=1,s(y)=7)\\ (s(x)=2,s(y)=5)\ (s(x)=2,s(y)=6)\ (s(x)=2,s(y)=7)\}
+\gamma^\prime(f)=\{(s(x)=1,s(y)=5)\ (s(x)=1,s(y)=6)\ (s(x)=1,s(y)=7)\\ (s(x)=2,s(y)=5)\ (s(x)=2,s(y)=6)\ (s(x)=2,s(y)=7)\}
 \end{align*}
 \begin{proof}
-	Need to show $\forall f,S\ \alpha^{'}(S)\sqsubseteq^{'}f \leftrightarrow S\subseteq \gamma^{'}(f)$.
+	Need to show $\forall f,S\ \alpha^\prime(S)\sqsubseteq^\prime f \leftrightarrow S\subseteq \gamma^\prime(f)$.
 	\begin{itemize}
-	\item Assume $\alpha^{'}(S)\sqsubseteq^{'}f$.\\
+	\item Assume $\alpha^\prime(S)\sqsubseteq^\prime f$.\\
 	Let $s\in S$, let $v\in Var^*$, let $f(v)=[l,u]$. We know that $\max\limits_{s\in S}s(v)\leq u$ from assumption, so $s(v)\leq u$. Similarly $s(v)\geq l$.\\
-	That means that in particular $s\in \gamma^{'}(f)$, because by definition $\gamma^{'}(f)$ contains all states within interval limits. Hence $S\subseteq \gamma^{'}(f)$.
-	\item Assume $S\subseteq \gamma^{'}(f)$.\\
+	That means that in particular $s\in \gamma^\prime(f)$, because by definition $\gamma^\prime(f)$ contains all states within interval limits. Hence $S\subseteq \gamma^\prime(f)$.
+	\item Assume $S\subseteq \gamma^\prime(f)$.\\
 	Let $v\in Var^*$. For all states $s\in S$ we know from assumption that $s(v)\in f(v)$, in particular the states that assign minimum and maxumum values to $v$.\\
-	So from definition $\alpha^{'}(S)(v)\sqsubseteq f(v)$. This is true for each $v$, so $\alpha^{'}(S)\sqsubseteq^{'}f$.
+	So from definition $\alpha^\prime(S)(v)\sqsubseteq f(v)$. This is true for each $v$, so $\alpha^\prime(S)\sqsubseteq^\prime f$.
 	\end{itemize}
 \end{proof}
-We show now that the connection is an insertion, i.e. $\forall f.\ \alpha^{'}(\gamma^{'}(f))=f$.
+We show now that the connection is an insertion, i.e. $\forall f.\ \alpha^\prime(\gamma^\prime(f))=f$.
 \begin{proof}
-	$\gamma^{'}(f)$ is a set of states, containing each possible assignment of values to $v\in Var^*$ from the interval $f(v)$. $\alpha^{'}(\gamma^{'}(f))$ produces a function whose output to $v$ ($\alpha^{'}(\gamma^{'}(f))(v)$) is the interval that spans from minimum to maximum of possible values of $v$ from this set of states, which is exactly $f(v)$. Hence, functions $f$ and $\alpha^{'}(\gamma^{'}(f))$ agree on all inputs from $Var^*$.
+	$\gamma^\prime(f)$ is a set of states, containing each possible assignment of values to $v\in Var^*$ from the interval $f(v)$. $\alpha^\prime(\gamma^\prime(f))$ produces a function whose output to $v$ ($\alpha^\prime(\gamma^\prime(f))(v)$) is the interval that spans from minimum to maximum of possible values of $v$ from this set of states, which is exactly $f(v)$. Hence, functions $f$ and $\alpha^\prime(\gamma^\prime(f))$ agree on all inputs from $Var^*$.
 \end{proof}

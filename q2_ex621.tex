@@ -1,0 +1,63 @@
+Prove that the predicate $INV$ of Example 6.9 satisfies
+\begin{equation*}
+	INV=\mathrm{wlp}(\swhile{\neg(x=1)}{\mathtt{(y:=y\star x;\ x:=x-1)}},\mathtt{y=n!\land n>0})
+\end{equation*}
+where
+\begin{equation*}
+INV\ s=(s \mathtt{x}>0\ \mathrm{implies}\ ((s \mathtt{y})\star(s \mathtt{x})!=(s \mathtt{n})!\ \mathrm{and}\ s \mathtt{n}\geq s \mathtt{x})).
+\end{equation*}
+For compactness sake, denote
+\begin{equation*}
+S:=\swhile{\neg(x=1)}{\mathtt{(y:=y\star x;\ x:=x-1)}}
+\end{equation*}
+and
+\begin{equation*}
+Q:=\mathtt{y=n!\land n>0}
+\end{equation*}
+\begin{proof}
+	\begin{enumerate}
+		\item From example 6.9 from book we know that
+		\begin{equation*}
+		\vdash_p \hoare{INV}{S}{Q}
+		\end{equation*}
+		Using soundness property we get
+		\begin{equation*}
+		\models_p \hoare{INV}{S}{Q}
+		\end{equation*}
+		Now apply Property 6.20 from book and get
+		\begin{equation*}
+		INV\Rightarrow\mathrm{wlp}(S,Q)
+		\end{equation*}
+		\item Let $s$ be a state such that $\mathrm{wlp}(S,Q)\ s=\true$. We want to show $INV\ s=\true$. We prove by induction on the shape of the derivation tree of $S$ in natural semantics.\\
+		
+		There are two cases. We start from the base case where $\beval{\neg(x=1)}{s}=\false$ and therefore $\nstrans{S}{s}{s}$. Now $Q\ s=\true$ and $s\ \mathtt{x}=1$, so we can deduce
+		\begin{equation*}
+		(s \mathtt{y})=(s \mathtt{n})!\land (s \mathtt{n})>0
+		\end{equation*}
+		and obviously $INV\ s=\true$.\\
+		
+		The other case is $\beval{\neg(x=1)}{s}=\true$. Consider $s^\prime$ and $s^{\prime\prime}$ such that 
+		\begin{equation*}
+		\nstrans{\mathtt{y:=y\star x;\ x:=x-1}}{s}{s^\prime}\ and\ \nstrans{S}{s^\prime}{s^{\prime\prime}}
+		\end{equation*}
+		Using natural semantics we can infer by using $\nsrule{ass}$ twice and $\nsrule{comp}$ that
+		\begin{equation*}
+		\nstrans{\mathtt{y:=y\star x;\ x:=x-1}}{s}{s\mapvar{y}{\aeval{\mathtt{y\star x}}{s}}\mapvar{x}{\aeval{\mathtt{x-1}}{s}}}
+		\end{equation*}
+		and from Theorem 2.9 (determinism of natural semantics) we get
+		\begin{equation*}
+		s^\prime=s\mapvar{y}{\aeval{\mathtt{y\star x}}{s}}\mapvar{x}{\aeval{\mathtt{x-1}}{s}}
+		\end{equation*}
+		We know that $Q\ s^{\prime\prime}=\true$ and thus $\mathrm{wlp}(S,Q)\ s^{\prime}=\true$. By induction hypothesis we get $INV\ s^\prime=\true$. Therefore
+		\begin{equation*}
+		INV\mapvar{y}{\mathtt{y\star x}}\mapvar{x}{\mathtt{x-1}}\ s=\true
+		\end{equation*}
+		Now directly resort to $INV$ definition and get
+		\begin{gather*}
+		s \mathtt{(x-1)}>0\ \mathrm{implies}\ ((s \mathtt{(y\star x)})\star(s \mathtt{(x-1)})!=(s \mathtt{n})!\ \mathrm{and}\ s \mathtt{n}\geq s \mathtt{(x-1)})=\true \\
+		s \mathtt{x}>1\ \mathrm{implies}\ ((s \mathtt{y})\star(s \mathtt{x})\star(s \mathtt{x}-1)!=(s \mathtt{n})!\ \mathrm{and}\ s \mathtt{n}\geq s \mathtt{x}-1)=\true \\
+		s \mathtt{x}>0\ \mathrm{implies}\ ((s \mathtt{y})\star(s \mathtt{x})!=(s \mathtt{n})!\ \mathrm{and}\ s \mathtt{n}\geq s \mathtt{x})=\true \\
+		\end{gather*}
+		Which is exactly $INV\ s=\true$. Hence, $\mathrm{wlp}(S,Q)\Rightarrow INV$.
+	\end{enumerate}
+\end{proof}
