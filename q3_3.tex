@@ -1,6 +1,30 @@
 Let $S$ be a set and $L$ a lattice. Let $(2^S, \alpha, \gamma, L)$ be a Galois connection. Then
 \begin{enumerate}
-	\item exists $\beta: S \rightarrow L$ s.t. $\alpha(X) = \sqcup\{\beta(s) \mid s \in X\}$ for any $X \subseteq S$, and
+	\item exists $\beta: S \rightarrow L$ s.t. $\alpha(X) = \bigsqcup\{\beta(s) \mid s \in X\}$ for any $X \subseteq S$, and
 	\item $\gamma(a) = \{s \in S \mid \beta(s) \sqsubseteq a \}$ for any $a \in A$.
 \end{enumerate}
-TODO
+\begin{proof}
+We'll provide a constructive proof for existence of $\beta$. Let
+\begin{equation*}
+\beta(s) = \alpha(\{s\})
+\end{equation*}
+then for $X \subseteq S$:
+\begin{align*}
+	\sqcup\{\beta(s) \mid s \in X\} & =  \bigsqcup\{\alpha(\{s\}) \mid s \in X\} \\
+    {} & \sqsubseteq \bigsqcup\{ \alpha(X) \mid s \in X \} \\
+	{} & = \alpha(X) \\
+	\\
+	\alpha(X) & =  \alpha\left(\bigcup_{s \in X}\{s\}\right) \\
+	{} & \sqsubseteq \bigsqcup_{s \in X} \alpha(\{s\}) \\
+	{} & = \bigsqcup_{s \in X} \beta(s) = \bigsqcup\{\beta(s) \mid s \in X\}
+	\\
+	\Rightarrow \alpha(X) & = \bigsqcup \{ \beta(s) \mid s \in X\}
+\end{align*}
+then, from $\gamma(a) = \bigsqcup \{ c \mid \alpha(c) \sqsubseteq a\}$:
+\begin{align*}
+	\gamma(a) & = \bigcup \{ Y \in 2^S \mid \alpha(Y) \sqsubseteq a\} \\
+	{} & = \bigcup \{ Y \in 2^S \mid \bigsqcup\{\beta(s) \mid s \in Y\} \sqsubseteq a \} \\
+	{} & = \bigcup \{ Y \in 2^S \mid \forall s \in Y: \beta(s) \sqsubseteq a\} \\
+	{} & = \{ s \in S \mid \beta(s) \sqsubseteq a\}
+\end{align*}
+\end{proof}
