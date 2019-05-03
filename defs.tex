@@ -7,6 +7,7 @@
 % Rules
 \newcommand{\nsrule}[2][]{\left[\text{#2}_{\text{ns}}^{\text{#1}}\right]}
 \newcommand{\sosrule}[2][]{\left[\text{#2}_{\text{sos}}^{\text{#1}}\right]}
+\newcommand{\prule}[2][]{\left[\text{#2}_{\text{p}}^{\text{#1}}\right]}
 
 % Transitions
 \newcommand{\nstrans}[3]{\state{#1}{#2} \rightarrow #3}
@@ -22,6 +23,8 @@
 \newcommand{\sif}[3]{\texttt{if } #1 \texttt{ then } #2 \texttt{ else } #3}
 \newcommand{\srepeat}[2]{\texttt{repeat } #1 \texttt{ until } #2}
 \newcommand{\swhile}[2]{\texttt{while } #1 \texttt{ do } #2}
+\newcommand{\spar}[2]{#1 \texttt{ par } #2}
+\newcommand{\sprotect}[1]{\texttt{protect } #1 \texttt{ end}}
 \newcommand{\mapvar}[2]{\left[#1 \mapsto #2\right]}
 
 % Literals

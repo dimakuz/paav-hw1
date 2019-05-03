@@ -1,0 +1,52 @@
+Consider an extension of \textbf{While} that in addition to the \texttt{par} construct also contains the construct
+\begin{equation*}
+	\sprotect{S}
+\end{equation*}
+The idea is that the statement $ S $ has to be executed as an atomic entity so that for example
+\begin{equation}
+	\spar{x:=1}{\sprotect{(x:=2; x:=x+2)}}
+\end{equation}
+only has two possible outcomes, namely \textbf{1} and \textbf{4}. Extend the structural operational semantics to express this. Can you specify the natural semantics for the extended language?
+
+\textit{Solution:} We will introduce an new syntactic property to statements: $ \mathcal{P} : S \rightarrow \texttt{bool}$. We'll define it as following:
+\begin{align*}
+	\mathcal{P}(S) = \begin{cases}
+	\true & \text{if $S$ is of form $\sprotect{\ldots}$}  \\
+	\false & \text{otherwise}
+	\end{cases}
+\end{align*}
+Now, we'll re-define the rules defined for \texttt{par} along with new rule for \texttt{protect}:
+\begin{align*}
+	\sosrule[1]{par} & \qquad &
+	\inferrule
+		{\sostrans{S_1}{s}{S_1^\prime}{s^\prime}}
+		{\sostrans{\spar{S_1}{S_2}}{s}{\spar{S_1^\prime}{S_2}}{s^\prime}}
+	& \qquad & \text{if } \mathcal{P}(S_1) = \false \\
+	\sosrule[2]{par} & &
+	\inferrule
+		{\sostrans{S_2}{s}{S_2^\prime}{s^\prime}}
+		{\sostrans{\spar{S_1}{S_2}}{s}{\spar{S_1}{S_2^\prime}}{s^\prime}}
+	& &\text{if } \mathcal{P}(S_2) = \false \\
+	\sosrule[3]{par} & \qquad &
+	\inferrule
+		{\sosftrans{S_1}{s}{s^\prime}}
+		{\sostrans{\spar{S_1}{S_2}}{s}{S_2}{s^\prime}}
+	& \qquad & \text{if } \mathcal{P}(S_1) = \false \\
+	\sosrule[4]{par} & &
+	\inferrule
+		{\sosftrans{S_2}{s}{s^\prime}}
+		{\sostrans{\spar{S_1}{S_2}}{s}{S_1}{s^\prime}}
+	& &\text{if } \mathcal{P}(S_2) = \false \\
+	\sosrule[5]{par} & &
+	\sostrans{\spar{S_1}{S_2}}{s}{S_1;S_2}{s}
+	& & \text{if } \mathcal{P}(S_1) = \true \vee \mathcal{P} = \true \\
+	\sosrule[6]{par} & &
+	\sostrans{\spar{S_1}{S_2}}{s}{S_2;S_1}{s}
+	& & \text{if } \mathcal{P}(S_1) = \true \vee \mathcal{P} = \true \\
+	\sosrule{protect} & &
+	\sostrans{\sprotect{S}}{s}{S}{s}
+	& &
+\end{align*}
+The new \texttt{par} rules ensure that protected statements are never interleaved. If a non~\texttt{protect} statement appears inside a \texttt{par} statement, then it can be partially (or fully executed). If a protected statement appears inside a parallel statement, then the parallel statement is serialized. The derivation of protected statement is straight-forward as the serialization happens in \texttt{par} rules.
+
+The natural semantics cannot be specified for the semantics extended with \texttt{protect}, since they cannot even be expressed for semantics extended only with \texttt{par}. As shown in the book, natual semantics cannot deal with interleaving.
