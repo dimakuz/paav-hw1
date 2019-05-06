@@ -18,15 +18,15 @@ P=\mathrm{wlp}(\swhile{\neg b}{S},\ Q)\\
 P^\prime=\mathrm{wlp}(\srepeat{S}{b},\ Q)
 \end{align*}
 From induction hypothesis on $S$ it is given that
-\begin{equation}
+\begin{equation}\label{q624:e1}
 \vdash_p\hoare{\mathrm{wlp}(S,P)}{S}{P}
 \end{equation}
 Also, in the proof of $\mathtt{while}$ completeness from the book the following propositions come handy:
-\begin{equation}
+\begin{equation}\label{q624:e2}
 (\beval{b}\land P)\Rightarrow Q
 \end{equation}
 and
-\begin{equation}
+\begin{equation}\label{q624:e3}
 (\neg\beval{b}\land P)\Rightarrow \mathrm{wlp}(S,\ P)
 \end{equation}
 It remains to show that
@@ -36,11 +36,11 @@ P^\prime\Rightarrow \mathrm{wlp}(S,\ P)
 If there is no state $s^\prime$ such that $\nstrans{S}{s}{s^\prime}$ then we're done. Otherwise we need to show that $P\ s^\prime =\true$. If there is no state $s^{\prime\prime}$ such that $\nstrans{\swhile{\neg b}{S}}{s^\prime}{s^{\prime\prime}}$ we're done. Otherwise we need to show $Q\ s^{\prime\prime} =\true$.
 Now we can apply $\nsrule{comp}$, get $\nstrans{S;\swhile{\neg b}{S}}{s}{s^{\prime\prime}}$ which is the same as $\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}$ because both statements are semantically equivalent and since $P^\prime\ s=\true$ we finally achieve $Q\ s^{\prime\prime} =\true$.\\
 
-Now use $[\mathrm{cons_p}]$ and (6) and get
+Now use $[\mathrm{cons_p}]$ and \refp{q624:e1} and get
 \begin{equation*}
 \vdash_p\hoare{P^\prime}{S}{P}
 \end{equation*}
-(6) and (8) give us together that
+\refp{q624:e1} and \refp{q624:e3} give us together that
 \begin{equation*}
 \vdash_p\hoare{\neg\beval{b}\land P}{S}{P}
 \end{equation*}
@@ -48,7 +48,7 @@ Apply $[\mathrm{repeat_p}]$ and get
 \begin{equation*}
 \vdash_p\hoare{P^\prime}{\srepeat{S}{b}}{P}
 \end{equation*}
-Apply $[\mathrm{cons_p}]$ with (7) gives us that
+Apply $[\mathrm{cons_p}]$ with \refp{q624:e2} gives us that
 \begin{equation*}
 \vdash_p\hoare{P^\prime}{\srepeat{S}{b}}{Q}
 \end{equation*}
