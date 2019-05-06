@@ -1,0 +1,56 @@
+Prove that the inference system for the $\mathtt{while}$-language extended with
+$\srepeat{S}{b}$ as in Exercise 6.11 is complete.
+\begin{proof}
+We will use the fact that the inference rule for $\mathtt{repeat}$ is
+\begin{equation*}
+[\mathrm{repeat_p}]\\ \\
+\inferrule
+{
+	\hoare{P}{S}{Q} \\ \hoare{\neg\beval{b}\land Q}{S}{Q}
+}
+{
+	\hoare{P}{\srepeat{S}{b}}{Q\land\beval{b}}
+}
+\end{equation*}
+Define predicates $P, P^\prime$ as
+\begin{align*}
+P=\mathrm{wlp}(\swhile{\neg b}{S},\ Q)\\
+P^\prime=\mathrm{wlp}(\srepeat{S}{b},\ Q)
+\end{align*}
+From induction hypothesis on $S$ it is given that
+\begin{equation}
+\vdash_p\hoare{\mathrm{wlp}(S,P)}{S}{P}
+\end{equation}
+Also, in the proof of $\mathtt{while}$ completeness from the book the following propositions come handy:
+\begin{equation}
+(\beval{b}\land P)\Rightarrow Q
+\end{equation}
+and
+\begin{equation}
+(\neg\beval{b}\land P)\Rightarrow \mathrm{wlp}(S,\ P)
+\end{equation}
+It remains to show that
+\begin{equation*}
+P^\prime\Rightarrow \mathrm{wlp}(S,\ P)
+\end{equation*}
+If there is no state $s^\prime$ such that $\nstrans{S}{s}{s^\prime}$ then we're done. Otherwise we need to show that $P\ s^\prime =\true$. If there is no state $s^{\prime\prime}$ such that $\nstrans{\swhile{\neg b}{S}}{s^\prime}{s^{\prime\prime}}$ we're done. Otherwise we need to show $Q\ s^{\prime\prime} =\true$.
+Now we can apply $\nsrule{comp}$, get $\nstrans{S;\swhile{\neg b}{S}}{s}{s^{\prime\prime}}$ which is the same as $\nstrans{\srepeat{S}{b}}{s}{s^{\prime\prime}}$ because both statements are semantically equivalent and since $P^\prime\ s=\true$ we finally achieve $Q\ s^{\prime\prime} =\true$.\\
+
+Now use $[\mathrm{cons_p}]$ and (6) and get
+\begin{equation*}
+\vdash_p\hoare{P^\prime}{S}{P}
+\end{equation*}
+(6) and (8) give us together that
+\begin{equation*}
+\vdash_p\hoare{\neg\beval{b}\land P}{S}{P}
+\end{equation*}
+Apply $[\mathrm{repeat_p}]$ and get
+\begin{equation*}
+\vdash_p\hoare{P^\prime}{\srepeat{S}{b}}{P}
+\end{equation*}
+Apply $[\mathrm{cons_p}]$ with (7) gives us that
+\begin{equation*}
+\vdash_p\hoare{P^\prime}{\srepeat{S}{b}}{Q}
+\end{equation*}
+which is what we need to prove.
+\end{proof}
